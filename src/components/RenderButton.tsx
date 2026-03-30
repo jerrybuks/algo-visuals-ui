@@ -63,7 +63,7 @@ export function RenderButton() {
           setPhase(dots % 6 < 3 ? 'generating' : 'rendering')
         } else if (job.status === 'done' && job.video_url) {
           clearInterval(pollRef.current!)
-          setVideoUrl(`http://localhost:8000${job.video_url}`)
+          setVideoUrl(`${import.meta.env.VITE_API_URL ?? 'http://localhost:8000'}${job.video_url}`)
           setPhase('done')
         } else if (job.status === 'failed') {
           clearInterval(pollRef.current!)

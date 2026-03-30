@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-const API = 'http://127.0.0.1:8000/api/v1'
+const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000') + '/api/v1'
 const POLL_INTERVAL = 3000
 
 type Status = 'idle' | 'pending' | 'narrating' | 'synthesizing' | 'generating' | 'rendering' | 'mixing' | 'done' | 'failed'
