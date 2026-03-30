@@ -180,6 +180,7 @@ export default function App() {
   const [algorithm, setAlgorithm] = useState<AlgorithmInfo | null>(null)
   const [steps, setSteps] = useState<string[]>([])
   const [hasAudio, setHasAudio] = useState(true)
+  const [flagged, setFlagged] = useState(false)
   const [history, setHistory] = useState<HistoryItem[]>([])
   const [historyLoading, setHistoryLoading] = useState(true)
   const [detailItem, setDetailItem] = useState<HistoryItem | null>(null)
@@ -261,6 +262,7 @@ export default function App() {
         if (data.algorithm) setAlgorithm(data.algorithm)
         if (data.steps?.length) setSteps(data.steps)
         if (data.has_audio === false) setHasAudio(false)
+        if (data.flagged) setFlagged(true)
         if (data.status === 'done') {
           stopPolling()
           const url = data.video_url?.startsWith('/')
@@ -285,6 +287,7 @@ export default function App() {
     setAlgorithm(null)
     setSteps([])
     setHasAudio(true)
+    setFlagged(false)
 
     try {
       const res = await fetch(`${API}/generate`, {
@@ -427,6 +430,12 @@ export default function App() {
                     <p className="text-xs text-amber-400 text-center">
                       Voiceover unavailable (TTS service unreachable) — narration is shown as text in the video.
                     </p>
+                  )}
+                  {flagged && (
+                    <div className="flex items-start gap-2 bg-amber-950/50 border border-amber-700/50 rounded-lg px-3 py-2 text-xs text-amber-400">
+                      <span className="mt-0.5">⚠</span>
+                      <span>The narration accuracy checker could not reach 95% confidence after 4 attempts. The explanation may contain inaccuracies.</span>
+                    </div>
                   )}
                 </div>
               )}
