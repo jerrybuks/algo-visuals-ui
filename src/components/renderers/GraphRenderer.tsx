@@ -28,8 +28,8 @@ function GraphNode({
 }) {
   const color = nodeColor(id, frame)
   const { col } = useSpring({ col: color, config: { tension: 180, friction: 18 } })
-  const state = frame.node_states?.[nodeId] ?? {}
-  const label = state.distance !== undefined ? `${id}\n${state.distance}` : id
+  const state = (frame.node_states?.[id] ?? {}) as Record<string, unknown>
+  const label = state['distance'] !== undefined ? `${id}\n${state['distance']}` : id
 
   return (
     <group position={[x, y, 0]}>

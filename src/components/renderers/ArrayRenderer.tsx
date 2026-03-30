@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import * as THREE from 'three'
 import { Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useSpring, animated } from '@react-spring/three'
