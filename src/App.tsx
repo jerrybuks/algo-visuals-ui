@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-
-const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000') + '/api/v1'
+import { API, API_BASE_URL } from './constants'
 const POLL_INTERVAL = 3000
 
 type Status = 'idle' | 'pending' | 'narrating' | 'synthesizing' | 'generating' | 'rendering' | 'mixing' | 'done' | 'failed'
@@ -266,7 +265,7 @@ export default function App() {
         if (data.status === 'done') {
           stopPolling()
           const url = data.video_url?.startsWith('/')
-            ? `http://127.0.0.1:8000${data.video_url}`
+            ? `${API_BASE_URL}${data.video_url}`
             : data.video_url
           setVideoUrl(url)
           loadHistory()
